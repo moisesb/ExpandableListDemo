@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         adapter.mainTaskClickEvent = ::handleTaskClick
         binding.tasksRecyclerView.adapter = adapter
         binding.tasksRecyclerView.layoutManager = LinearLayoutManager(this)
+
     }
 
     private fun handleTaskClick(idTask: String) {
