@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun handleTaskClick(idTask: String) {
+    private fun handleTaskClick(taskId: String) {
         val subTasks = listOf<Task>(
             Task.SubTask(uuid(), "Subtask 1"),
             Task.SubTask(uuid(), "Subtask 2"),
@@ -40,22 +40,13 @@ class MainActivity : AppCompatActivity() {
             Task.SubTask(uuid(), "Subtask 4"),
         )
 
-        var index = 0
-        for (task in adapter.tasks) {
-            when (task) {
-                is Task.MainTask -> {
-                    if (task.id.equals(idTask)) {
-                        index = adapter.tasks.indexOf(task)
-                    }
-                }
-            }
-        }
-        val selectedTask = adapter.tasks[index]
+        val index = tasks.indexOfFirst { task -> task is Task.MainTask && task.id == taskId }
+        val selectedTask = tasks[index]
         if (selectedTask !is Task.MainTask) {
             Log.e("MainActivity", "Only MainTask selection is supported")
             return
         }
-        val newTasks = adapter.tasks.toMutableList()
+        val newTasks = tasks.toMutableList()
         if (selectedTask.expanded) {
             repeat(subTasks.size) {
                 newTasks.removeAt(index + 1)
